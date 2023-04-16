@@ -12,8 +12,8 @@ def read_input():
 
     if "F" in text_input:
         filename = "06"
-#         if "a" in filename:
-#            return
+        if "a" in filename:
+           return
         else:
             filename = "tests/" + filename
             f = open(filename)
