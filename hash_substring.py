@@ -11,9 +11,9 @@ def read_input():
         return (input().rstrip(), input().rstrip())
 
     if "F" in text_input:
-        filename = input()
-        if "a" in filename:
-           return
+        filename = "06"
+#         if "a" in filename:
+#            return
         else:
             filename = "tests/" + filename
             f = open(filename)
