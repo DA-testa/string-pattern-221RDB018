@@ -39,32 +39,32 @@ def print_occurrences(output):
 
 def get_occurrences(pattern, text):
     # this function should find the occurances using Rabin Karp alghoritm 
-    p_len = len(pattern)
-    t_len = len(text)
+    pattern_length = len(pattern)
+    text_length = len(text)
     prime = 101
-    mod = 10**9 + 7
-    p_hash = 0
-    t_hash = 0
-    power = 1
+    q = 10000007
+    h = pow(prime, pattern_length - 1) % q
 
-    for i in range(p_len):
-        p_hash = (p_hash + ord(pattern[i]) * power) % mod
-        t_hash = (t_hash + ord(text[i]) * power) % mod
-        power = (power * prime) % mod
-
+    pattern_hash = 0
+    current_text_hash = 0
     result = []
-    for i in range(t_len - p_len + 1):
-        if p_hash == t_hash and text[i:i + p_len] == pattern:
-            result.append(i)
 
-        if i < t_len - p_len:
-            t_hash = (t_hash - ord(text[i]) * power // prime) % mod
-            t_hash = (t_hash * prime + ord(text[i + p_len])) % mod
-            t_hash = (t_hash + mod) % mod
+    for i in range(pattern_length):
+        pattern_hash = (prime * pattern_hash + ord(pattern[i])) % q
+        current_text_hash = (prime * current_text_hash + ord(text[i])) % q
+
+    for i in range(text_length - pattern_length + 1):
+        if pattern_hash == current_text_hash:
+            for j in range(pattern_length):
+                if text[i + j] != pattern[j]:
+                    break
+            else:
+                result.append(i)
+
+        if i < text_length - pattern_length:
+            current_text_hash = (prime * (current_text_hash - ord(text[i]) * h) + ord(text[i + pattern_length])) % q
 
     return result
-
-
     # and return an iterable variable
 #     return [0]
 
